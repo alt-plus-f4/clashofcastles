@@ -5,6 +5,7 @@ Project for python.
 The game circles around popular clash of clans.
 
 ### Todo
+- [X] Reorganize project
 - [ ] Make HUD
 - [ ] Make isometric rendering
   - [ ] Connect scenery
