@@ -1,0 +1,2 @@
+# clashofguilds
+Python pygame project
