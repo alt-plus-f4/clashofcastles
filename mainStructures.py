@@ -75,12 +75,15 @@ class Game:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     gameExit = True
-                if(newLevel.handle_event(event) == 420):
-                    Game.main_game()
-
+                # if(newLevel.handle_event(event) == 420):
+                newLevel.handle_event(event)
+                    # Game.main_game()
+            
+            # Click Shop
             if(shop_button.draw()):
                 print("shop")
 
+            # Click Attack
             if(attack_button.draw()):
                 print("attac")
 

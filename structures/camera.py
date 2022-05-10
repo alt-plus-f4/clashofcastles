@@ -7,6 +7,7 @@ class CameraGroup(pg.sprite.Group):
         self.ground_surf = background_img
         self.ground_rect = self.ground_surf.get_rect(topleft = (0,0))
     def draw(self):
+        
         # Scenery
 
         self.display_surface.blit(self.ground_surf, self.ground_rect)

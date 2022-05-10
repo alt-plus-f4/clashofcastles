@@ -1,4 +1,3 @@
-from re import X
 from pygame import MOUSEWHEEL
 from config import *
 
@@ -20,11 +19,11 @@ class Level:
             pg.draw.line(gameDisplay, LIGHTGREY, (0, y), (WIDTH, y))
     def draw(self):
         gameDisplay.blit(pg.transform.scale(background_img, (WIDTH, HEIGHT)), (0, 0))
-        self.draw_grid()
+        # self.draw_grid()
 
     def handle_event(self, event):
         if event.type == MOUSEWHEEL:
-            self.x += (event.x + event.y) * 10
+            self.x += (event.x + event.y) * 20
 
             gameDisplay.blit(pg.transform.scale(background_img, (WIDTH + self.x, HEIGHT + self.x)), (0, 0))
-        self.draw_grid()
+        # self.draw_grid()
