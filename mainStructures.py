@@ -64,10 +64,12 @@ class Game:
             quit()
     def main_game():
         gameExit = False
-        arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        
+        arr = [['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0']]
+
         newLevel = Level(arr)
         newLevel.draw()
 
@@ -75,21 +77,20 @@ class Game:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     gameExit = True
-                # if(newLevel.handle_event(event) == 420):
-                newLevel.handle_event(event)
-                    # Game.main_game()
+                if event.type == pg.MOUSEBUTTONDOWN:
+                    newLevel.handle_event()
+
+            # newLevel.draw() lAgging
             
             # Click Shop
             if(shop_button.draw()):
                 print("shop")
-
             # Click Attack
             if(attack_button.draw()):
                 print("attac")
 
             if(shop_button.is_hovered() or attack_button.is_hovered()):
                 pg.mouse.set_cursor(pg.SYSTEM_CURSOR_HAND)
-
             else:
                 pg.mouse.set_cursor(pg.SYSTEM_CURSOR_ARROW)
 

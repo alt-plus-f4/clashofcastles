@@ -1,7 +1,8 @@
 import pygame as pg
-from libs.database import DataBase
+from pygame.math import Vector2
+# from libs.database import DataBase
 
-db = DataBase("localhost","root","","pygame")
+# db = DataBase("localhost","root","","pygame")
 
 black = (0,0,0)
 white = (255,255,255)
@@ -26,22 +27,21 @@ gameDisplay = pg.display.set_mode((WIDTH,HEIGHT))
 icon = pg.image.load('assets\\icon.png')
 
 pg.display.set_icon(icon)
-pg.display.set_caption('Clash of guilds')
+pg.display.set_caption('Clash of Castles')
 pg.display.update()
 
 # Images
 attack_img = pg.image.load('assets\\attack.png').convert_alpha()
 shop_img = pg.image.load('assets\\shop.png').convert_alpha()
-
+grass_img = pg.image.load('assets\\grass.png').convert_alpha()
+grass2_img = pg.image.load('assets\\grass2.png').convert_alpha()
 # BG
 background_img = pg.image.load('assets\\background.png').convert_alpha()
 
 # FONT
 font = pg.font.Font('assets\\font.ttf', 25)
 
-TILESIZE = 32
-GRIDWIDTH = WIDTH / TILESIZE
-GRIDHEIGHT = HEIGHT / TILESIZE
+TILESIZE = WIDTH // 40
 
 BGCOLOR = DARKGREY
 

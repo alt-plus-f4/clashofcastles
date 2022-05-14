@@ -6,10 +6,11 @@ The game circles around popular clash of clans.
 
 ### Todo
 - [X] Reorganize project
+- [ ] ADD moving with arrow keys
 - [ ] Make HUD
 - [ ] Make isometric rendering
   - [ ] Connect scenery
-  - [ ] Zooming
+  - [ ] Zooming - ?
 - [ ] Attacking
   - [ ] Attacking base generation 
   - [ ] Attacking HUD
