@@ -1,5 +1,5 @@
 import pygame as pg
-from pygame.math import Vector2
+
 # from libs.database import DataBase
 
 # db = DataBase("localhost","root","","pygame")
@@ -35,13 +35,14 @@ attack_img = pg.image.load('assets\\attack.png').convert_alpha()
 shop_img = pg.image.load('assets\\shop.png').convert_alpha()
 grass_img = pg.image.load('assets\\grass.png').convert_alpha()
 grass2_img = pg.image.load('assets\\grass2.png').convert_alpha()
+cannon_img = pg.image.load('assets\\canon.png').convert_alpha()
 # BG
 background_img = pg.image.load('assets\\background.png').convert_alpha()
 
 # FONT
 font = pg.font.Font('assets\\font.ttf', 25)
 
-TILESIZE = WIDTH // 40
+TILESIZE = WIDTH // 63
 
 BGCOLOR = DARKGREY
 

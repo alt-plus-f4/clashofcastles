@@ -11,8 +11,8 @@ class Level:
         self.blockmap = pg.sprite.Group()
 
         # for row in self.arr: 
-        for row in range(0, 50): 
-            for col in range(0, 50):
+        for row in range(0, 64): 
+            for col in range(0, 36):
                 # if tile == '1':
                 #     gameDisplay.blit(dirt_image, (x * TILE_SIZE, y * TILE_SIZE))
                 # if tile == 0:
@@ -39,10 +39,12 @@ class Level:
             if i == 1:
                 print("1")
 
-    def handle_event(self):
+    def handle_event(self, open):
+        if(open == True and pg.mouse.get_pos() == (0, 0)):
+            print("oa")
         # ADD MOVING WITH ARROW KEYS
-        for item in self.blockmap:
-            item.move()
+        # for item in self.blockmap:
+        #     item.move()
         # gameDisplay.blit(pg.transform.scale(background_img, (WIDTH + self.x, HEIGHT + self.x)), (0, 0))
 
 class Tile(pg.sprite.Sprite):
