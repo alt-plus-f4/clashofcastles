@@ -10,7 +10,7 @@ The game circles around popular clash of clans.
 - [ ] Attacking
   - [ ] Attacking base generation 
   - [ ] Attacking HUD
-  - [ ] Attacking path-finding alg
+  - [X] Attacking path-finding alg
   - [ ] Attacking troops
 - [X] Building
   - [X] Buildings
