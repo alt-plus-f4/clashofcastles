@@ -6,20 +6,20 @@ The game circles around popular clash of clans.
 
 ### Todo
 - [X] Reorganize project
-- [N] ADD moving with arrow keys
 - [ ] Make HUD
-- [N] Make isometric rendering
-  - [N] Connect scenery
-  - [N] Zooming - ?
 - [ ] Attacking
   - [ ] Attacking base generation 
   - [ ] Attacking HUD
   - [ ] Attacking path-finding alg
   - [ ] Attacking troops
-- [ ] Building
-  - [ ] Buildings
-  - [ ] GUI
+- [X] Building
+  - [X] Buildings
+  - [X] GUI
+  - [ ] Prices
   - [ ] Health of different buildings
+- [ ] Resources
+  - [ ] Elixir
+  - [ ] Gold coins  
 
 ### Description
 
