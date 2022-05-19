@@ -1,3 +1,4 @@
+from turtle import width
 import pygame as pg
 
 # from libs.database import DataBase
@@ -35,12 +36,22 @@ attack_img = pg.image.load('assets\\attack.png').convert_alpha()
 shop_img = pg.image.load('assets\\shop.png').convert_alpha()
 grass_img = pg.image.load('assets\\grass.png').convert_alpha()
 grass2_img = pg.image.load('assets\\grass2.png').convert_alpha()
-cannon_img = pg.image.load('assets\\canon.png').convert_alpha()
+cannon_img = pg.image.load('assets\\cannon.png').convert_alpha()
+wall_img = pg.image.load('assets\\wall.png').convert_alpha()
+elixir_img = pg.image.load('assets\\elixir.png').convert_alpha()
+coin_img = pg.image.load('assets\\coin.png').convert_alpha()
+wall_img_ig = pg.image.load('assets\\wall-ig.png').convert_alpha()
+cannon_img_ig = pg.image.load('assets\\cannon-ig.png').convert_alpha()
 # BG
-background_img = pg.image.load('assets\\background.png').convert_alpha()
+background_img = pg.image.load('assets\\background_rendered.png').convert_alpha()
 
 # FONT
 font = pg.font.Font('assets\\font.ttf', 25)
+
+# TRANSLATE
+
+cannon_img_ig = pg.transform.scale(cannon_img_ig, (cannon_img.get_width() // 5, cannon_img.get_height() // 5))
+wall_img_ig = pg.transform.scale(wall_img_ig, (wall_img_ig.get_width() // 5, wall_img_ig.get_height() // 5))
 
 TILESIZE = WIDTH // 63
 
