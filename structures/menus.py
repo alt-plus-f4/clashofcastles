@@ -10,6 +10,16 @@ def shop_menu():
     menu = pg.sprite.Group([rect, close_button])
     menu.draw(gameDisplay)
 
+def attack_menu():
+    rect = Rectangle(1000, 650, (232, 223, 223))
+    rect.set_rounded(10)
+    rect.rect.center = gameDisplay.get_rect().center
+    close_button = Rectangle(30, 30, (255, 0, 0))
+    close_button.set_rounded(5)
+    close_button.rect.center = (1120, 55)
+    menu = pg.sprite.Group([rect, close_button])
+    menu.draw(gameDisplay)
+    
 def exited(shop_open):
     if(shop_open == True and pg.mouse.get_pos()[0] > 1105 and  pg.mouse.get_pos()[0] < 1135 and pg.mouse.get_pos()[1] > 40 and pg.mouse.get_pos()[1] < 70):
         return True

@@ -64,14 +64,14 @@ class Build:
 
         if(self.type == 'CAN'):
             if(self.is_on_point_can() != 0):
-                print(self.is_on_point_can())
+                # print(self.is_on_point_can())
                 return -1
             # self.arr.append((x, y, 'CAN'))
             return (x, y, 'CAN')
 
         else:
             if(self.is_on_point_wal() != 0):
-                print(self.is_on_point_wal())
+                # print(self.is_on_point_wal())
                 return -1
             # self.arr.append((x, y, 'WAL'))
             return (x, y, 'WAL')
@@ -86,7 +86,6 @@ class Build:
                 # print(x, y)
                 # print(self.arr[i][0])
                 # print(self.arr[i][1])
-
                 if(x == self.arr[i][0] and y == self.arr[i][1]):
                     # print("FIRST", x)
                     # print("SECOND", self.arr[i - 1][0])
@@ -122,14 +121,34 @@ class Build:
         
         for i in range(0, len(self.arr)):
             if(self.arr != []):
+
+                if(self.arr[i][2] == 'CAN'):
+                    if(x == self.arr[i][0] and y == self.arr[i][1]):
+                        return 1
+                    elif(x == self.arr[i][0] + 1 and y == self.arr[i][1]):   
+                        return 2
+                    elif(y == self.arr[i][1] + 1 and x == self.arr[i][0]):   
+                        return 2
+                    elif(y == self.arr[i][1] + 1 and x == self.arr[i][0] + 1):   
+                        return 2
+
+                    # elif(x == self.arr[i][0] + 1 and y == self.arr[i][1] + 1):
+                    #     return 2   
+                    # elif(x == self.arr[i][0] - 1 and y == self.arr[i][1] - 1):
+                    #     return 2 
+
+                    # elif(y == self.arr[i][1] + 1 and x == self.arr[i][0] - 1):
+                    #     return 2   
+                    # elif(y == self.arr[i][1] - 1 and x == self.arr[i][0] + 1):
+                    #     return 2 
+                else:
                 # print(x, y)
                 # print(self.arr[i][0])
                 # print(self.arr[i][1])
-
-                if(x == self.arr[i][0] and y == self.arr[i][1]):
-                    # print("FIRST", x)
-                    # print("SECOND", self.arr[i - 1][0])
-                    return 1
+                    if(x == self.arr[i][0] and y == self.arr[i][1]):
+                        # print("FIRST", x)
+                        # print("SECOND", self.arr[i - 1][0])
+                        return 1
             else:
                 return 0
         return 0

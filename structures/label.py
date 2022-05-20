@@ -9,3 +9,14 @@ class Label:
         
     def draw(self, gameDisplay):
         gameDisplay.blit(self.label, (self.x, self.y))
+
+class DynLabel:
+    def __init__(self, x, y, color, toggle, text=''):
+        self.x = x
+        self.y = y
+        self.text = text
+        if(toggle):
+            self.label = small_font.render(text, True, color)
+        else:
+            self.label = font.render(text, True, color)
+        gameDisplay.blit(self.label, (self.x, self.y))
