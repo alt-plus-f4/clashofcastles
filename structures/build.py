@@ -75,6 +75,14 @@ class Build:
                 return -1
             # self.arr.append((x, y, 'WAL'))
             return (x, y, 'WAL')
+    
+    def add_static(self, coords):
+        x = coords[0]
+        y = coords[1]
+        if(self.type == 'CAN'):
+            return (x, y, 'CAN')
+        else:
+            return (x, y, 'WAL')
 
     # FUNC that shows if your mouse is over an object
     def is_on_point_can(self):

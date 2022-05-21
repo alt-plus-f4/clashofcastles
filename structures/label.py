@@ -15,8 +15,10 @@ class DynLabel:
         self.x = x
         self.y = y
         self.text = text
-        if(toggle):
+        if(toggle == True):
             self.label = small_font.render(text, True, color)
-        else:
+        elif(toggle == False):
             self.label = font.render(text, True, color)
+        else:
+            self.label = big_font.render(text, True, color)
         gameDisplay.blit(self.label, (self.x, self.y))

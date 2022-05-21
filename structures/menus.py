@@ -11,7 +11,7 @@ def shop_menu():
     menu.draw(gameDisplay)
 
 def attack_menu():
-    rect = Rectangle(1000, 650, (232, 223, 223))
+    rect = Rectangle(1000, 650, (244, 241, 160))
     rect.set_rounded(10)
     rect.rect.center = gameDisplay.get_rect().center
     close_button = Rectangle(30, 30, (255, 0, 0))
@@ -51,3 +51,15 @@ class Label:
         
     def draw(self, gameDisplay):
         gameDisplay.blit(self.label, (self.x, self.y))
+
+# Additional functions not related to the menus
+def in_grid(coords):
+    if(coords[0] > 0 and coords[0] < 1280):
+        if(coords[1] > 0 and coords[1] < 720):
+            # print(coords[0])
+            # print(coords[1])
+            return True
+        else:
+            return False
+    else:
+        return False

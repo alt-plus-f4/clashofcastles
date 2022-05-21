@@ -8,4 +8,3 @@ class Map():
         for item in self.arr:
             if(item != '0'):
                 print("a")
-    

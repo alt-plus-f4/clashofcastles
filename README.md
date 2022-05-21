@@ -1,4 +1,4 @@
-# Clash of Guilds
+# Clash of Castles
 
 Project for python.
 
@@ -7,24 +7,25 @@ The game circles around popular clash of clans.
 ### Todo
 - [X] Reorganize project
 
-- [ ] Make HUD
+- [X] Make HUD
 
 - [ ] Attacking
-    - [ ] Attacking base generation 
-    - [ ] Attacking HUD
+    - [X] Attacking base generation 
+    - [X] Attacking HUD
     - [X] Attacking path-finding alg
-    - [ ] Attacking troops
+    - [X] Attacking troops
+    - [ ] Manual routing
     
 - [X] Building
     - [X] Buildings
     - [X] GUI
-    - [ ] Prices
+    - [x] Prices
     - [ ] Health of different buildings
     
-- [ ] Resources
-    - [ ] Elixir
-    - [ ] Gold coins  
+- [x] Resources
+    - [x] Elixir
+    - [x] Gold coins  
+    - [ ] Maybe gems
 
 ### Description
 
-Should be ready in 2022
