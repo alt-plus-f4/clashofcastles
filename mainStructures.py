@@ -138,7 +138,7 @@ class Game:
 		selected = None
 		more = False
 		is_open_attack = False
-		attack = True
+		attack = False
 		startup = False
 
 		# architectures = PleaseHelp()
@@ -298,14 +298,11 @@ class Game:
 					buildings = Build('CAN')
 
 					architectures.append(buildings.add_static((20, 4)))
-
 					matrix[4][20] = 0
 					matrix[4][21] = 0
 					matrix[5][20] = 0
 					matrix[5][21] = 0
-
 					architectures.append(buildings.add_static((20, 6)))
-
 					matrix[6][20] = 0
 					matrix[6][21] = 0
 					matrix[7][20] = 0
@@ -313,10 +310,18 @@ class Game:
 
 					buildings = Build('WAL')
 
-					matrix[6][23] = 0
-
 					architectures.append(buildings.add_static((23, 6)))
-
+					architectures.append(buildings.add_static((19, 6)))
+					architectures.append(buildings.add_static((19, 5)))
+					architectures.append(buildings.add_static((19, 4)))
+					architectures.append(buildings.add_static((19, 7)))
+					architectures.append(buildings.add_static((23, 5)))
+					matrix[6][19] = 0
+					matrix[4][19] = 0
+					matrix[5][19] = 0
+					matrix[7][19] = 0
+					matrix[6][23] = 0
+					matrix[5][23] = 0
 
 					pathfinder.update_grid(matrix)
 					

@@ -64,7 +64,7 @@ class Pathfinder:
 				points.append((x,y))
 			# self.get_target()
 			if len(points) > 1:
-				pg.draw.lines(gameDisplay,'#4a4a4a',False,points,5)
+				pg.draw.lines(gameDisplay, (red),False,points,5)
 	def wall_or_cannon(self, row, col):
 		rect = pg.Rect((col * TILESIZE,row * TILESIZE),(TILESIZE * 2,TILESIZE * 2))
 		gameDisplay.blit(select_cannnon_img, rect)
