@@ -1,4 +1,5 @@
 from config import *
+import math
 
 class Build:
     def __init__(self, types):
@@ -39,23 +40,45 @@ class Build:
             
             pg.draw.rect(gameDisplay, (124,252,0), self.square)
             return
+        else:
+            return False
 
     
-    def draw_all(self, array = []):
+    def draw_all(self, array = [], pos = None):
         self.arr = array
         # print("X", self.arr[0][0])
         # print("Y", self.arr[0][1])
         # print("TYPE", self.arr[0][2])
+        if(self.arr == []):
+            return False
         x, y = self.arr[0][0], self.arr[0][1]
 
         for i in range(0, len(self.arr)):
             if(self.arr[i][2] == 'CAN'):
                 x, y = self.arr[i][0], self.arr[i][1]
                 gameDisplay.blit(cannon_img_ig, (x * TILESIZE, y * TILESIZE))
-            else:
+            elif(self.arr[i][2] == 'WAL'):
                 x, y = self.arr[i][0], self.arr[i][1]
                 gameDisplay.blit(wall_img_ig, (x * TILESIZE, y * TILESIZE))
+            elif(self.arr[i][2] == 'CANA'):
+                    player_pos  = (x * TILESIZE, y * TILESIZE)
+                    # print(player_pos)
+                    player_rect = cannon_img_ig.get_rect(center = player_pos)
 
+                    mx, my = pos[0], pos[1]
+                    dx, dy = mx - player_rect.centerx, my - player_rect.centery
+                    # print(dx, dy)
+                    self.projx, self.projy = mx, my
+                    self.angle = math.degrees(math.atan2(-dy, dx)) - 90
+                    # print(angle)
+
+                    rot_image      = pg.transform.rotate(cannon_img_ig, self.angle)
+                    rot_image_rect = rot_image.get_rect(center = player_rect.center)
+                    gameDisplay.blit(rot_image, rot_image_rect.topleft)
+
+                    # return (self.projx, self.projy, self.angle)
+            else:
+                return False
     
     # Add item/s
     def add(self):
@@ -79,10 +102,15 @@ class Build:
     def add_static(self, coords):
         x = coords[0]
         y = coords[1]
+
         if(self.type == 'CAN'):
             return (x, y, 'CAN')
-        else:
+
+        elif(self.type == 'WAL'):
             return (x, y, 'WAL')
+
+        elif(self.type == 'CANA'):
+            return (x, y, 'CANA')
 
     # FUNC that shows if your mouse is over an object
     def is_on_point_can(self):

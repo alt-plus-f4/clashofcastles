@@ -4,12 +4,22 @@ Project for python class.
 
 The game circles around popular clash of clans.
 
+### Features
+
+Въпреки че играта не е съвсем готова, основната и идея
+е, че играчите могат да си направят база, която се запазва във база
+и се използва за т.нар raid-ове, при които човек може да печели 
+ресурси, за да продължава да разширява кралството си.
+
+С добавена подръжка на база данни играчите могат да имат запазена
+база всеки път, когато влезнат в играта.
+
 ### Todo
 - [X] Reorganize project
 
 - [X] Make HUD
 
-- [ ] Attacking
+- [X] Attacking
     - [X] Attacking base generation 
     - [X] Attacking HUD
     - [X] Attacking path-finding alg
@@ -29,29 +39,11 @@ The game circles around popular clash of clans.
     - [x] Gold coins  
     - [ ] Maybe gems
 
-- [ ] Database
+- [X] Database
     - [X] Code
-    - [ ] Saving
-    - [ ] Loading
-    - [ ] Attacks
- 
-### Features
-
-Въпреки че играта не е съвсем готова, основната и идея
-е, че играчите могат да си направят база, която се запазва във база
-и се използва за т.нар raid-ове, при които човек може да печели 
-ресурси, за да продължава да разширява кралството си.
-
-Готовите неща са показани отгоре, като крайния продукт би трябвало да
-съдържа всичките характеристика на напълно завършена и забавна игра.
-
-Нещата, които не съм успял да направя, ще мога да довърша до максимум
-1 месец време, тъй като за повечето няма никакъв код в интернет и 
-трябва да се четат документации.
-
-Извинявам се за невключването на unit-test-ове, но всичко е тествано,
-освен A*star pathfinding алгоритъма, който се смята за най-добър, но
-всъщност има сравнително много проблеми, които не зависят от моя код. 
+    - [X] Saving
+    - [X] Loading
+    - [X] Attacks
 
 ### Dependencies
 
@@ -61,6 +53,11 @@ The game circles around popular clash of clans.
 
 `Time module`
 
-`Mysql connector module`(Not used because of not enough time)
+`Mysql connector module`
 
 `pymediainfo module` `os module`
+
+`random module`
+
+`MYSQL or MariaDB configuration in config.py`
+

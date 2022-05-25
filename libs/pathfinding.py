@@ -16,10 +16,8 @@ class Pathfinder:
 		
 		# pathfinding
 		self.path = []
-
 	def empty_path(self):
 		self.path = []
-
 	def draw_active_cell(self):
 		mouse_pos = pg.mouse.get_pos()
 		row =  mouse_pos[1] // TILESIZE
@@ -29,16 +27,17 @@ class Pathfinder:
 		current_cell_value = self.matrix[row][col]
 
 		# print(current_cell_value)
+		# WALL
+		if(current_cell_value == 2):
+			current_cell_value = 0
 
-		if current_cell_value == 1:
+		if(current_cell_value == 1):
 			if(in_grid(pg.mouse.get_pos())):
 				# print(in_grid(pg.mouse.get_pos()))
 				rect = pg.Rect((col * TILESIZE,row * TILESIZE),(TILESIZE,TILESIZE))
 				gameDisplay.blit(self.select_surf,rect)
 		else:
 			self.wall_or_cannon(row, col)
-
-
 	def create_path(self):
 
 		# start
@@ -68,7 +67,15 @@ class Pathfinder:
 	def wall_or_cannon(self, row, col):
 		rect = pg.Rect((col * TILESIZE,row * TILESIZE),(TILESIZE * 2,TILESIZE * 2))
 		gameDisplay.blit(select_cannnon_img, rect)
+	def hero_getpos(self):
+		return self.Hero.sprite.get_pos()
 
+	def get_tiles(self):
+		self.tiles = self.Hero.sprite.get_pos()
+		self.tilex = round(self.tiles[0], -2)
+		self.tiley = round(self.tiles[1], -2)
+
+		return (self.tilex, self.tiley)
 	# def get_target(self, buildings):
 	# 	for item in buildings:
 	# 		x = item[0] // TILESIZE
@@ -112,8 +119,7 @@ class Pathfinder:
 
 		# Hero updating and drawing
 		self.Hero.update()
-		self.Hero.draw(gameDisplay)
-	
+		self.Hero.draw(gameDisplay)	
 	def update_grid(self, matrix):
 		self.matrix = matrix
 		self.grid = Grid(matrix = matrix)
@@ -145,6 +151,9 @@ class Hero(pg.sprite.Sprite):
 		# print("COL:", col)
 		# print("ROW:", row)
 		return (col,row)
+	
+	def get_pos(self):
+		return (self.rect.centerx, self.rect.centery)
 
 	def set_path(self,path):
 		self.path = path
@@ -182,3 +191,16 @@ class Hero(pg.sprite.Sprite):
 		self.pos += self.direction * self.speed
 		self.check_collisions()
 		self.rect.center = self.pos
+
+class Projectile:
+    def __init__(self,x,y,radius,color,facing):
+        self.x = x
+        self.y = y
+        self.radius = radius
+        self.color = color
+        self.facing = facing
+        self.vel = 5 * facing
+
+    def draw(self):
+        pg.draw.circle(gameDisplay, self.color, (self.x,self.y), self.radius)
+

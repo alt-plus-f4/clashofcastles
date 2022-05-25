@@ -7,10 +7,14 @@ from structures.buttons import Button
 from structures.level import Level
 from structures.build import Build
 from structures.overlay import Resources
+from structures.player import Player
 from structures.costs import *
 from structures.menus import *
+from structures.save import *
+from structures.arcmatrix import *
 from libs.pyvidplayer import Video
-from libs.pathfinding import Pathfinder
+from libs.pathfinding import Pathfinder, Projectile
+from random import randint
 import time
 
 # Buttons here for now
@@ -25,60 +29,11 @@ buy_menu_text = Label(200, 75, "Buy BUILDINGS")
 x = Label(1108, 38, "X")
 attack_start = Button(480, 300, attack_start_img)
 
-# Resources
-
-gold = Resources(5000, 'GOL')
-elixir = Resources(1000, 'ELI')
-
-# MATRIX is here
-matrix = [ 
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
-
-
-# Pathfinder
-pathfinder = Pathfinder(matrix)
-
 class Game:
-	def start():
-		
+	def start():		
 		gameExit = False
 
-		vid = Video("C:\\Users\\Valentin\\Desktop\\Programmin\\PROJECT PY\\nodont.mp4")
+		vid = Video("assets\\nodont.mp4")
 		vid.set_size((WIDTH, HEIGHT))
 		start_time = time.time()
 
@@ -98,20 +53,36 @@ class Game:
 			if int(elapsed_time) > 2:
 				vid.close()
 				Game.enter_tag()
-	def enter_tag():
-		gameExit = False
-		logged = False
 
-		label = Label(300, 200, "Input tag:")
-		input_box = InputBox(300, 250, 200, 50)
+		pg.quit()
+		quit()	
+	def enter_tag():
+		with open("tag.txt", "r") as f:
+			tag = f.read()
+			if(tag != ""):
+				Game.main_game(tag)
+			else:
+				pass
+
+		gameExit = False
+
+		label = Label(550, 250, "Input tag:")
+		input_box = InputBox(550, 300, 300, 50)
+
 
 		while not gameExit:
 			for event in pg.event.get():
 				if event.type == pg.QUIT:
 					gameExit = True
+				
+				tag = input_box.handle_event(event)
 
-				if(input_box.handle_event(event) == 420):
-					Game.main_game()
+				if(tag != None):
+
+					# Current Player tag and stuff that I need which is only tag
+					current_player_tag = Player(str(tag))
+
+					Game.main_game(current_player_tag)
 
 				input_box.update()
 
@@ -124,18 +95,47 @@ class Game:
 			pg.display.update()
 
 			Clock = pg.time.Clock()
-			Clock.tick(30)
-		if gameExit:    
-			pg.quit()
-			quit()
-	def main_game():
+			Clock.tick(30) 
+	   
+		pg.quit()
+		quit()
+		
+	def main_game(current_player_tag):
+		mixer.music.load('assets\\soundtrack.mp3')
+		mixer.music.play(-1)
+
 		gameExit = False
+
+		# MATRIX is here
+		matrix, count_g, count_e = load(current_player_tag)
+		
+		# print("Load matrix ",matrix)
+
+		matrix = stringtolist(matrix)
+
+		# print("First matrix ",matrix[1][1])
+
+		architectures = matrix_to_arc(matrix)
+		if(architectures):
+			buildings = Build('WAL')
+			selected = 42
+		else:
+			selected = None
+
+		# print("Arc", architectures , "\n")
+
+		# Resources
+		gold = Resources(count_g, 'GOL')
+		elixir = Resources(count_e, 'ELI')
+
+		# Pathfinder
+		pathfinder = Pathfinder(matrix)
 
 		newLevel = Level(matrix)
 		newLevel.draw()
+		dead = False
 		shop_open = False
 		build = False
-		selected = None
 		more = False
 		is_open_attack = False
 		attack = False
@@ -143,9 +143,33 @@ class Game:
 
 		# architectures = PleaseHelp()
 
-		architectures = []
-
 		while not gameExit:
+			if(dead):
+				time.sleep(0.5)
+				mixer.music.load('assets\\soundtrack.mp3')
+				mixer.music.play(-1)
+
+				matrix, count_g, count_e = load(current_player_tag)
+
+				matrix = stringtolist(matrix)
+
+				architectures = matrix_to_arc(matrix)
+				if(architectures):
+					buildings = Build('WAL')
+					selected = 42
+				else:
+					selected = None
+
+				newLevel = Level(matrix)
+				newLevel.draw()
+				shop_open = False
+				build = False
+				more = False
+				is_open_attack = False
+				attack = False
+				startup = False
+
+				dead = False
 
 			# With some optimising it is fine to redraw everything 
 			# just to have that semi-transparent buttons
@@ -154,8 +178,13 @@ class Game:
 
 			for event in pg.event.get():
 				if event.type == pg.QUIT:
+					# db.cursor.close()
+					with open("tag.txt", "w") as f:
+						f.write(str(current_player_tag))
+					matrix = arc_to_matrix(matrix, architectures)
+					# print("Matrix save", matrix[1][1])
+					save(matrix, gold, elixir, current_player_tag)
 					gameExit = True
-
 				# Normal mode
 				if(not attack):
 					if event.type == pg.MOUSEBUTTONDOWN:
@@ -184,15 +213,20 @@ class Game:
 								if(more):
 									gold.remove_monez(1000)
 								else:
-									gold.remove_monez(100)
-						
+									gold.remove_monez(100)		
 				# Attack mode
 				else:
 					if event.type == pg.MOUSEBUTTONDOWN:
 						# If mouse isn't in grid there is some kind of error idk why
 						# SO add a check just to be sure
+						position = pg.mouse.get_pos()
 						pathfinder.create_path()
 						# print("E")
+					# if event.type == pg.KEYDOWN:
+					# 	if(event.key == pg.K_SPACE):
+					# 		print("a")
+					# 		bullet = Projectile(info[0], info[1], 6, (0,0,0), info[2])
+					# 		bullet.draw()
 
 			# Normal mode
 			if(not attack):
@@ -283,7 +317,9 @@ class Game:
 							# print("no $")
 
 				if(is_open_attack):
-					DynLabel(530, 450, (0,0,0), 'big', "COST:")
+					DynLabel(500, 450, (0,0,0), 'big', "COST:")
+					DynLabel(450, 200, red, True, "Don't get too close to the cannons or you'll see!")
+					DynLabel(470, 220, red, True, "Also don't stay in the same place for a long time!")
 					DynLabel(680, 450, ELIXIR_CR, 'big', "500")
 					x.draw(gameDisplay)
 					if(attack_start.draw()):
@@ -295,42 +331,78 @@ class Game:
 			# Attacking
 			else:
 				if(startup == False):
-					buildings = Build('CAN')
+					pathfinder = Pathfinder(matrix)
+					
+					mixer.music.load('assets\\soundtrack-attack.mp3')
+					mixer.music.play(-1)
+					position1 = None
+					position = None
+					attack_arc = []
+					bullet = None
+					wait = 0
+					dead = False
 
-					architectures.append(buildings.add_static((20, 4)))
-					matrix[4][20] = 0
-					matrix[4][21] = 0
-					matrix[5][20] = 0
-					matrix[5][21] = 0
-					architectures.append(buildings.add_static((20, 6)))
-					matrix[6][20] = 0
-					matrix[6][21] = 0
-					matrix[7][20] = 0
-					matrix[7][21] = 0
+					attack_matrix = init_attack_matrix()
 
-					buildings = Build('WAL')
+					buildings_attack = Build('CANA')
 
-					architectures.append(buildings.add_static((23, 6)))
-					architectures.append(buildings.add_static((19, 6)))
-					architectures.append(buildings.add_static((19, 5)))
-					architectures.append(buildings.add_static((19, 4)))
-					architectures.append(buildings.add_static((19, 7)))
-					architectures.append(buildings.add_static((23, 5)))
-					matrix[6][19] = 0
-					matrix[4][19] = 0
-					matrix[5][19] = 0
-					matrix[7][19] = 0
-					matrix[6][23] = 0
-					matrix[5][23] = 0
+					attack_arc = matrix_to_arc(attack_matrix, True)
 
-					pathfinder.update_grid(matrix)
+					pathfinder.update_grid(attack_matrix)
+
+					# print(pathfinder.matrix)
 					
 					startup = True
-					# print(architectures)
-	
+					# print(attack_arc)
+				if(position != None):
+					position1 = (round(position[0], -2), round(position[1], -2))
+
 				newLevel.draw()
-				buildings.draw_all(architectures)
+				buildings_attack.draw_all(attack_arc, pathfinder.hero_getpos())
+
+				if((pathfinder.get_tiles() == position1) or position1 == None):
+					wait+=1
+				else:
+					wait = 0
+
+				# print(pathfinder.hero_getpos()[1])
+				# print(wait)
+
+				if((pathfinder.hero_getpos()[0] > 500 and pathfinder.hero_getpos()[0] < 800) and (pathfinder.hero_getpos()[1] > 150 and pathfinder.hero_getpos()[1] < 400)):
+					mixer.init()
+					mixer.music.load("assets\\shot.mp3")
+					mixer.music.set_volume(1)
+					mixer.music.play()
+
+					dead = True
+					attack = False
+
+				# YOU LOSE
+				if(wait > 15):
+					mixer.init()
+					mixer.music.load("assets\\shot.mp3")
+					mixer.music.set_volume(1)
+					mixer.music.play()
+
+					dead = True
+					attack = False
+				
+				# YOU WIN
+				if(pathfinder.get_tiles()[0] >= 1300):
+					elixir.remove_monez(-2000)
+					gold.remove_monez(-500)
+					dead = True
+
 				pathfinder.update()
+
+				# if bullet != None:
+				# 	if bullet.x < 1280 and bullet.x > 0:
+				# 		bullet.x += bullet.vel
+				# 		bullet.draw()
+				# 	else:
+				# 		bullet = None
+				# print(pathfinder.hero_getpos())
+
 
 			pg.display.update()
 			Clock = pg.time.Clock()
@@ -351,4 +423,4 @@ class Game:
 # for asd in whole:
 # 	print(asd)
 
-Game.main_game()
+Game.start()

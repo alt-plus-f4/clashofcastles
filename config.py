@@ -1,8 +1,9 @@
 import pygame as pg
+from pygame import mixer
 
-# from libs.database import DataBase
+from libs.database import DataBase
 
-# db = DataBase("localhost","root","","pygame")
+db = DataBase("localhost","root","","pygame")
 
 black = (0,0,0)
 white = (255,255,255)

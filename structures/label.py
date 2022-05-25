@@ -5,7 +5,7 @@ class Label:
         self.x = x
         self.y = y
         self.text = text
-        self.label = font.render(text, True, (0, 0, 0))
+        self.label = font.render(text, True, white)
         
     def draw(self, gameDisplay):
         gameDisplay.blit(self.label, (self.x, self.y))
