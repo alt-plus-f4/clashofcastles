@@ -1,10 +1,17 @@
-from config import *
-# from structures.input import InputBox
-# from structures.label import Label
-# from structures.label import DynLabel These don't return
-# from structures.buttons import Buttons
-# from structures.buttons import Button
-# from structures.level import Level
+import unittest
+from unittest.mock import patch, MagicMock
+
+with patch('mysql.connector.connect') as mock_connect:
+    dummy_conn = MagicMock()
+    dummy_cursor = MagicMock()
+
+    dummy_cursor.fetchone.return_value = ""   # or return a tuple, e.g. ("",) or (0,)
+    dummy_conn.cursor.return_value = dummy_cursor
+
+    mock_connect.return_value = dummy_conn
+
+    from config import db
+
 from structures.build import Build
 from structures.overlay import Resources
 from structures.player import Player
@@ -13,8 +20,8 @@ from structures.menus import *
 from structures.save import *
 from structures.arcmatrix import *
 from libs.pathfinding import Pathfinder
-import unittest
-
+from config import *
+import pygame as pg
 testobj_build = Build('CAN')
 testobj_resources = Resources(100, 'ELI')
 testobj_player = Player(123123)

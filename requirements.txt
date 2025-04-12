@@ -1,0 +1,6 @@
+pygame
+mysql-connector-python
+pymediainfo
+ffpyplayer
+pathfinding
+pytest

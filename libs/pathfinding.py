@@ -10,7 +10,7 @@ class Pathfinder:
 		# SETUP
 		self.matrix = matrix
 		self.grid = Grid(matrix = matrix)
-		self.select_surf = pg.image.load('.\\assets\\crosshair.png').convert_alpha()
+		self.select_surf = pg.image.load('./assets/crosshair.png').convert_alpha()
 		self.select_surf = pg.transform.scale(self.select_surf, (self.select_surf.get_width() // 1.4, self.select_surf.get_height() // 1.4))
 		self.Hero = pg.sprite.GroupSingle(Hero(self.empty_path))
 		
@@ -131,7 +131,7 @@ class Hero(pg.sprite.Sprite):
 
 		# basic
 		super().__init__()
-		self.image = pg.image.load('.\\assets\\Hero.png').convert_alpha()
+		self.image = pg.image.load('./assets/Hero.png').convert_alpha()
 		self.image = pg.transform.scale(self.image, (self.image.get_width() // 15, self.image.get_height() // 15))
 		self.rect = self.image.get_rect(center = (60,60))
 

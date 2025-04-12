@@ -35,16 +35,26 @@ class DataBase:
 		self.db.commit()
 	
 	def get_base(self, tag):
-		self.cursor.execute(f"SELECT `base` FROM `userdata` WHERE `userdata`.`tag` = '{tag}';")
-		return self.cursor.fetchone()[0]
+		tag = str(tag)
+		self.cursor.execute("SELECT base FROM userdata WHERE tag = %s", (tag,))
+		result = self.cursor.fetchone()
+		if result is None:
+			return ""
+		return result[0]
 	
 	def get_money(self, tag):
-		self.cursor.execute(f"SELECT `gold` FROM `userdata` WHERE `userdata`.`tag` = '{tag}';")
-		return self.cursor.fetchone()[0]
+		self.cursor.execute("SELECT `gold` FROM `userdata` WHERE `userdata`.`tag` = %s", (tag,))
+		result = self.cursor.fetchone()
+		if result is None:
+			return 0
+		return result[0]
 
 	def get_elixir(self, tag):
-		self.cursor.execute(f"SELECT `elixir` FROM `userdata` WHERE `userdata`.`tag` = '{tag}';")
-		return self.cursor.fetchone()[0]
+		self.cursor.execute("SELECT `elixir` FROM `userdata` WHERE `userdata`.`tag` = %s", (tag,))
+		result = self.cursor.fetchone()
+		if result is None:
+			return 0
+		return result[0]
 	
 	def save(self, base, gold, elixir, tag):
 		self.cursor.execute(f"UPDATE `userdata` SET `base` = '{base}', `gold` = '{gold}', `elixir` = '{elixir}' WHERE `userdata`.`tag` = '{tag}';")

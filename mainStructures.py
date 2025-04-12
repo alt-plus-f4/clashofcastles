@@ -13,8 +13,7 @@ from structures.menus import *
 from structures.save import *
 from structures.arcmatrix import *
 from libs.pyvidplayer import Video
-from libs.pathfinding import Pathfinder, Projectile
-from random import randint
+from libs.pathfinding import Pathfinder
 import time
 
 # Buttons here for now
@@ -33,7 +32,7 @@ class Game:
 	def start():		
 		gameExit = False
 
-		vid = Video("assets\\nodont.mp4")
+		vid = Video("assets/nodont.mp4")
 		vid.set_size((WIDTH, HEIGHT))
 		start_time = time.time()
 
@@ -101,7 +100,7 @@ class Game:
 		quit()
 		
 	def main_game(current_player_tag):
-		mixer.music.load('assets\\soundtrack.mp3')
+		mixer.music.load('assets/soundtrack.mp3')
 		mixer.music.play(-1)
 
 		gameExit = False
@@ -109,7 +108,7 @@ class Game:
 		# MATRIX is here
 		matrix, count_g, count_e = load(current_player_tag)
 		
-		# print("Load matrix ",matrix)
+		print("Loaded ", matrix, count_g, count_e)
 
 		matrix = stringtolist(matrix)
 
@@ -146,7 +145,7 @@ class Game:
 		while not gameExit:
 			if(dead):
 				time.sleep(0.5)
-				mixer.music.load('assets\\soundtrack.mp3')
+				mixer.music.load('assets/soundtrack.mp3')
 				mixer.music.play(-1)
 
 				matrix, count_g, count_e = load(current_player_tag)
@@ -333,7 +332,7 @@ class Game:
 				if(startup == False):
 					pathfinder = Pathfinder(matrix)
 					
-					mixer.music.load('assets\\soundtrack-attack.mp3')
+					mixer.music.load('assets/soundtrack-attack.mp3')
 					mixer.music.play(-1)
 					position1 = None
 					position = None
@@ -370,7 +369,7 @@ class Game:
 
 				if((pathfinder.hero_getpos()[0] > 500 and pathfinder.hero_getpos()[0] < 800) and (pathfinder.hero_getpos()[1] > 150 and pathfinder.hero_getpos()[1] < 400)):
 					mixer.init()
-					mixer.music.load("assets\\shot.mp3")
+					mixer.music.load("assets/shot.mp3")
 					mixer.music.set_volume(1)
 					mixer.music.play()
 
@@ -380,7 +379,7 @@ class Game:
 				# YOU LOSE
 				if(wait > 15):
 					mixer.init()
-					mixer.music.load("assets\\shot.mp3")
+					mixer.music.load("assets/shot.mp3")
 					mixer.music.set_volume(1)
 					mixer.music.play()
 
