@@ -70,7 +70,7 @@ class TestStringMethods(unittest.TestCase):
 
     # COSTS
     def test_buycannon_True(self):
-        self.assertTrue(buy_cannon(3000))
+        self.assertTrue(buy_cannon(1000))
 
     def test_buycannon_False(self):
         self.assertFalse(buy_cannon(30))

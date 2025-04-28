@@ -8,7 +8,7 @@ The game circles around popular clash of clans.
 
 Въпреки че играта не е съвсем готова, основната и идея
 е, че играчите могат да си направят база, която се запазва във база
-и се използва за т.нар raid-ове, при които човек може да печели 
+и се използва за т.нар raid-ове, при които човек може да печели
 ресурси, за да продължава да разширява кралството си.
 
 С добавена поддръжка на база данни играчите могат да имат запазена
@@ -27,50 +27,46 @@ stalker и е напълно готово всеки миг да пусне гю
     Пожелавам Ви приятна игра!
 
 ### Todo
-- [X] Reorganize project
 
-- [X] Make HUD
+-   [x] Reorganize project
 
-- [X] Attacking
-    - [X] Attacking base generation 
-    - [X] Attacking HUD
-    - [X] Attacking path-finding alg
-    - [X] Attacking troops
-    - [X] Manual routing
-    - [ ] Fight
-    
-- [X] Building
-    - [X] Buildings
-    - [X] GUI
-    - [x] Prices
-    - [ ] Health of different buildings
-    - [ ] Fighting
-    
-- [x] Resources
-    - [x] Elixir
-    - [x] Gold coins  
-    - [ ] Maybe gems
+-   [x] Make HUD
 
-- [X] Database
-    - [X] Code
-    - [X] Saving
-    - [X] Loading
-    - [X] Attacks
+-   [x] Attacking
+    -   [x] Attacking base generation
+    -   [x] Attacking HUD
+    -   [x] Attacking path-finding alg
+    -   [x] Attacking troops
+    -   [x] Manual routing
+    -   [ ] Fight
+-   [x] Building
+    -   [x] Buildings
+    -   [x] GUI
+    -   [x] Prices
+    -   [ ] Health of different buildings
+    -   [ ] Fighting
+-   [x] Resources
+
+    -   [x] Elixir
+    -   [x] Gold coins
+    -   [ ] Maybe gems
+
+-   [x] Database
+    -   [x] Code
+    -   [x] Saving
+    -   [x] Loading
+    -   [x] Attacks
 
 ### Dependencies
 
-`Pygame`
+`python -m venv venv`
 
-`Python 3.10.2`
+`source venv/bin/activate`
 
-`Time module`
+`pip install -r requirements.txt`
 
-`Mysql connector module`
+### RUN DOCKERFILE
 
-`pymediainfo module` `os module`
+`docker build -t clashofcastles-db .`
 
-`random module`
-
-`MYSQL or MariaDB configuration in config.py`
-`CONFIG FILE`
-https://pastebin.com/RdabZPQL
+`docker run -d -p 3306:3306 --name clashofcastles-db-container clashofcastles-db`
